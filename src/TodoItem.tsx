@@ -1,8 +1,8 @@
 import { FC } from "react";
 
 interface Props{
-	name: string,
-	key: number
+	id: number,
+	name: string
 }
 const TodoItem: FC<Props> = (props) => {
 	return(
