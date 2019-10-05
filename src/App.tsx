@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import TodoList from './TodoList';
@@ -6,10 +6,9 @@ import TodoItem from './TodoItem';
 import TodoInput from './TodoInput';
 
 const App: React.FC = () => {
-  const tasks = [
-    { name: "1", id: 0 },
-    { name: "2", id: 1 },
-  ]
+  const [tasks, setTasks] = useState([
+    { name: "default", id: 0 },
+  ]);
 
   return (
     <div className="App">
