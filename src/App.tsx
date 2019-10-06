@@ -7,7 +7,7 @@ import TodoInput from './TodoInput';
 
 const App: React.FC = () => {
   const [tasks, setTasks] = useState([
-    { name: "default", id: 0 },
+    { name: "", id: 0 },
   ]);
   const [uniqueId, setId] = useState(0)
 
@@ -20,11 +20,16 @@ const App: React.FC = () => {
     setId(uniqueId + 1);
   }
 
+  function resetTodo(){
+    setTasks([])
+  }
+
   return (
     <div className="App">
       <header className="App-header">
         <h2>TODO App</h2>
         <TodoInput addTodo={ addTodo }/>
+        <button onClick={resetTodo}>リセット</button>
         <TodoList tasks = { tasks }/>
       </header>
     </div>
