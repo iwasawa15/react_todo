@@ -4,13 +4,13 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { reducerWithInitialState } from 'typescript-fsa-reducers';
-import { Action } from 'redux'
+import { Action, createStore } from 'redux'
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
 // Action の定義
 interface Task{
-	name: string
+	task: string
 }
 
 interface TasksState{
@@ -19,9 +19,7 @@ interface TasksState{
 
 interface TaskAction extends Action{
 	type: string,
-	payload: {
-		task: Task
-	}
+	payload: Task
 }
 
 // initailState の定義
@@ -30,13 +28,27 @@ const initialState: TasksState = {
 };
 
 // Action Creater の定義
-const addTask = (task: Task) => ({
+const addTask = (task: string) => ({
 	type: 'ADD_TASK',
 	payload: {
 		task
 	}
 })
 
+// Store の定義
+const store = createStore(tasksReducer);
+
+function handleChange(){
+	console.log(store.getState())
+}
+
+const unsubscribe = store.subscribe(handleChange)
+
+console.log(store.getState())
+
+store.dispatch(addTask('Storeを学ぶ'));
+
+// tasksReducer の定義
 function tasksReducer(state: TasksState = initialState, action: TaskAction){
 	switch(action.type){
 		case 'ADD_TASK':
