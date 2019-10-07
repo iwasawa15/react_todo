@@ -36,7 +36,7 @@ const addTask = (task: string) => ({
 })
 
 // Store の定義
-const store = createStore(tasksReducer);
+const store = createStore(addTasksReducer);
 
 function handleChange(){
 	console.log(store.getState())
@@ -49,12 +49,24 @@ console.log(store.getState())
 store.dispatch(addTask('Storeを学ぶ'));
 
 // tasksReducer の定義
-function tasksReducer(state: TasksState = initialState, action: TaskAction){
+function addTasksReducer(state: TasksState = initialState, action: TaskAction){
 	switch(action.type){
 		case 'ADD_TASK':
 			return {
 				...state,
 				tasks: Object.assign(state.tasks, action.payload)
+			};
+		default:
+			return state;
+	}
+}
+
+function resetTasksReducer(state: TasksState = initialState, action: TaskAction){
+	switch(action.type){
+		case 'RESET_TASK':
+			return {
+				...state,
+				tasks: []
 			};
 		default:
 			return state;
