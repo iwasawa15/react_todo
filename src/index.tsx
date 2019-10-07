@@ -8,6 +8,7 @@ import { Action } from 'redux'
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
+// Action の定義
 interface Task{
 	name: string
 }
@@ -16,16 +17,25 @@ interface TasksState{
 	tasks: Task[]
 }
 
-const initialState: TasksState = {
-	tasks: []
-};
-
 interface TaskAction extends Action{
 	type: string,
 	payload: {
 		task: Task
 	}
 }
+
+// initailState の定義
+const initialState: TasksState = {
+	tasks: []
+};
+
+// Action Creater の定義
+const addTask = (task: Task) => ({
+	type: 'ADD_TASK',
+	payload: {
+		task
+	}
+})
 
 function tasksReducer(state: TasksState = initialState, action: TaskAction){
 	switch(action.type){
