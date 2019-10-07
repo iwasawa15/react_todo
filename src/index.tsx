@@ -17,9 +17,13 @@ interface TasksState{
 	tasks: Task[]
 }
 
-interface TaskAction extends Action{
+interface AddAction extends Action{
 	type: string,
 	payload: Task
+}
+
+interface RemoveAction extends Action{
+	type: string
 }
 
 // initailState の定義
@@ -35,21 +39,12 @@ const addTask = (task: string) => ({
 	}
 })
 
-// Store の定義
-const store = createStore(addTasksReducer);
-
-function handleChange(){
-	console.log(store.getState())
-}
-
-const unsubscribe = store.subscribe(handleChange)
-
-console.log(store.getState())
-
-store.dispatch(addTask('Storeを学ぶ'));
+const resetTask = () => ({
+	type: 'RESET_TASK'
+})
 
 // tasksReducer の定義
-function addTasksReducer(state: TasksState = initialState, action: TaskAction){
+function addTasksReducer(state: TasksState = initialState, action: AddAction){
 	switch(action.type){
 		case 'ADD_TASK':
 			return {
@@ -61,7 +56,7 @@ function addTasksReducer(state: TasksState = initialState, action: TaskAction){
 	}
 }
 
-function resetTasksReducer(state: TasksState = initialState, action: TaskAction){
+function resetTasksReducer(state: TasksState = initialState, action: RemoveAction){
 	switch(action.type){
 		case 'RESET_TASK':
 			return {
@@ -72,6 +67,27 @@ function resetTasksReducer(state: TasksState = initialState, action: TaskAction)
 			return state;
 	}
 }
+
+// Store の定義
+var store = createStore(addTasksReducer);
+
+function handleChange(){
+	console.log(store.getState())
+}
+
+const unsubscribe = store.subscribe(handleChange)
+// unsubscribe()
+
+console.log(store.getState())
+
+store.dispatch(addTask('Storeを学ぶ'));
+
+store.replaceReducer(resetTasksReducer);
+
+store.dispatch(addTask('Reducerを学ぶ'));
+
+console.log(store.getState())
+
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
