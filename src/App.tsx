@@ -5,6 +5,9 @@ import TodoList from './TodoList';
 import TodoItem from './TodoItem';
 import TodoInput from './TodoInput';
 
+import { Store } from 'redux'
+
+// pure React
 const App: React.FC = () => {
   const [tasks, setTasks] = useState([
     { name: "", id: 0 },

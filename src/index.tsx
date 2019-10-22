@@ -1,92 +1,32 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { FC } from 'react';
+import ReactDOM, { render } from 'react-dom';
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { reducerWithInitialState } from 'typescript-fsa-reducers';
-import { Action, createStore } from 'redux'
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// pure React
+// import App from './App';
 
-// Action の定義
-interface Task{
-	task: string
-}
+//Redux
+import { createStore, Store } from 'redux'
 
-interface TasksState{
-	tasks: Task[]
-}
+import TodoApp from './components/TodoApp'
+import tasksReducer from './reducers/tasks';
 
-interface AddAction extends Action{
-	type: string,
-	payload: Task
-}
-
-interface RemoveAction extends Action{
-	type: string
-}
-
-// initailState の定義
-const initialState: TasksState = {
-	tasks: []
-};
-
-// Action Creater の定義
-const addTask = (task: string) => ({
-	type: 'ADD_TASK',
-	payload: {
-		task
-	}
-})
-
-const resetTask = () => ({
-	type: 'RESET_TASK'
-})
-
-// tasksReducer の定義
-function addTasksReducer(state: TasksState = initialState, action: AddAction){
-	switch(action.type){
-		case 'ADD_TASK':
-			return {
-				...state,
-				tasks: Object.assign(state.tasks, action.payload)
-			};
-		default:
-			return state;
-	}
-}
-
-function resetTasksReducer(state: TasksState = initialState, action: RemoveAction){
-	switch(action.type){
-		case 'RESET_TASK':
-			return {
-				...state,
-				tasks: []
-			};
-		default:
-			return state;
-	}
-}
+// pure React
+// ReactDOM.render(<App />, document.getElementById('root'));
 
 // Store の定義
-var store = createStore(addTasksReducer);
+const store: Store = createStore(tasksReducer);
 
-function handleChange(){
-	console.log(store.getState())
+const renderApp = (store: Store) => {
+	ReactDOM.render(
+		<TodoApp store={store}/>,
+		document.getElementById('root')
+	)	
 }
 
-const unsubscribe = store.subscribe(handleChange)
-// unsubscribe()
-
-console.log(store.getState())
-
-store.dispatch(addTask('Storeを学ぶ'));
-
-store.replaceReducer(resetTasksReducer);
-
-store.dispatch(addTask('Reducerを学ぶ'));
-
-console.log(store.getState())
+const unsubscribe = store.subscribe(() => renderApp(store))
+renderApp(store)
 
 
 // If you want your app to work offline and load faster, you can change
