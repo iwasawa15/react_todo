@@ -9,8 +9,9 @@ import * as serviceWorker from "./serviceWorker";
 //Redux
 import { createStore, Store } from "redux";
 
-import TodoApp from "./components/TodoApp";
+import TodoApp from "./containers/TodoApp";
 import tasksReducer from "./reducers/tasks";
+import { Provider } from "react-redux";
 
 // pure React
 // ReactDOM.render(<App />, document.getElementById('root'));
@@ -18,12 +19,12 @@ import tasksReducer from "./reducers/tasks";
 // Store の定義
 const store: Store = createStore(tasksReducer);
 
-const renderApp = (store: Store) => {
-  ReactDOM.render(<TodoApp store={store} />, document.getElementById("root"));
-};
-
-const unsubscribe = store.subscribe(() => renderApp(store));
-renderApp(store);
+ReactDOM.render(
+  <Provider store={store}>
+    <TodoApp />
+  </Provider>,
+  document.getElementById("root")
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
