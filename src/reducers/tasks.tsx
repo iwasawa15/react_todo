@@ -21,10 +21,7 @@ const initialState: TasksState = {
 type TaskAction = AddAction | ResetAction | InputAction;
 
 // tasksReducer の定義
-export default function tasksReducer(
-  state: TasksState = initialState,
-  action: TaskAction
-) {
+const tasksReducer = (state: TasksState = initialState, action: TaskAction) => {
   switch (action.type) {
     case INPUT_TASK:
       return {
@@ -44,4 +41,6 @@ export default function tasksReducer(
     default:
       return state;
   }
-}
+};
+
+export default tasksReducer;
