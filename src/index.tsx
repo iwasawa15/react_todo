@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import ReactDOM, { render } from "react-dom";
+import ReactDOM from "react-dom";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 
@@ -7,21 +7,28 @@ import * as serviceWorker from "./serviceWorker";
 // import App from './App';
 
 //Redux
-import { createStore, Store } from "redux";
+import { Store } from "redux";
 
 import TodoApp from "./containers/TodoApp";
-import tasksReducer from "./reducers/tasks";
 import { Provider } from "react-redux";
+import { createBrowserHistory, History } from "history";
+import createStore from "./store";
+import { ConnectedRouter } from "react-router-redux";
 
 // pure React
 // ReactDOM.render(<App />, document.getElementById('root'));
 
+// history
+const history: History = createBrowserHistory();
+
 // Store の定義
-const store: Store = createStore(tasksReducer);
+const store: Store = createStore(history);
 
 ReactDOM.render(
   <Provider store={store}>
-    <TodoApp />
+    <ConnectedRouter history={history}>
+      <TodoApp />
+    </ConnectedRouter>
   </Provider>,
   document.getElementById("root")
 );
