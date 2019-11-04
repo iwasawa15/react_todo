@@ -14,6 +14,7 @@ import { Provider } from "react-redux";
 import { createBrowserHistory, History } from "history";
 import createStore from "./store";
 import { ConnectedRouter } from "react-router-redux";
+import { Route } from "react-router";
 
 // pure React
 // ReactDOM.render(<App />, document.getElementById('root'));
@@ -27,7 +28,8 @@ const store: Store = createStore(history);
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <TodoApp />
+      <Route exact paht="/" conponent={TodoApp} />
+      <Route exact path="/error" conponent={Error} />
     </ConnectedRouter>
   </Provider>,
   document.getElementById("root")
